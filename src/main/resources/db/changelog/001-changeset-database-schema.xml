@@ -1,0 +1,52 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="create-persons-table" author="elias">
+        <sql>
+            CREATE TABLE persons
+            (
+                id       BIGSERIAL PRIMARY KEY NOT NULL,
+                username VARCHAR(255),
+                password VARCHAR(255),
+                role     VARCHAR(255)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="create-rooms-table" author="elias">
+        <sql>
+            CREATE TABLE rooms
+            (
+                id   BIGSERIAL PRIMARY KEY NOT NULL,
+                name VARCHAR(2000)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="create-messages-table" author="elias">
+        <sql>
+            CREATE TABLE messages
+            (
+                id        BIGSERIAL PRIMARY KEY NOT NULL,
+                text      VARCHAR(2000),
+                created   TIMESTAMP,
+                person_id BIGINT,
+                room_id   BIGINT,
+                FOREIGN KEY (person_id) REFERENCES persons (id),
+                FOREIGN KEY (room_id) REFERENCES rooms (id)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="create-persons-rooms-table" author="elias">
+        <sql>
+            CREATE TABLE persons_rooms
+            (
+                id        BIGSERIAL PRIMARY KEY NOT NULL,
+                person_id BIGINT,
+                room_id   BIGINT,
+                FOREIGN KEY (person_id) REFERENCES persons (id),
+                FOREIGN KEY (room_id) REFERENCES rooms (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

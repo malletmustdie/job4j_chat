@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5433/chat
+    username: postgres
+    password: pass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties.hibernate:
+      show-sql: true
+      format_sql: true
+      hbm2ddl.auto: validate
+      jdbc.lob.non_contextual_creation: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+springfox:
+  documentation:
+    swagger.v2.path: /v2/api-docs

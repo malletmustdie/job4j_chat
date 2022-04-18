@@ -1,0 +1,93 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet author="elias" id="init-persons">
+        <sql>
+            insert into persons (username, password, role)
+            values ('Admin', 'root', 'ADMIN');
+            insert into persons (username, password, role)
+            values ('Student-1', 'qwerty', 'USER');
+            insert into persons (username, password, role)
+            values ('Student-2', 'qwerty', 'USER');
+            insert into persons (username, password, role)
+            values ('Student-3', 'qwerty', 'USER');
+            insert into persons (username, password, role)
+            values ('Student-4', 'qwerty', 'USER');
+            insert into persons (username, password, role)
+            values ('Student-5', 'qwerty', 'USER');
+            insert into persons (username, password, role)
+            values ('Student-6', 'qwerty', 'USER');
+            insert into persons (username, password, role)
+            values ('Student-7', 'qwerty', 'USER');
+            insert into persons (username, password, role)
+            values ('Student-8', 'qwerty', 'USER');
+            insert into persons (username, password, role)
+            values ('Student-9', 'qwerty', 'USER');
+            insert into persons (username, password, role)
+            values ('Student-10', 'qwerty', 'USER');
+        </sql>
+    </changeSet>
+    <changeSet author="elias" id="init-rooms">
+        <sql>
+            insert into rooms (name)
+            values ('Job4j Стажер (Синтаксис, ООП, Коллекции)');
+            insert into rooms (name)
+            values ('Job4j Джуниор (Data Structures, IO, GC, SQL, TDD, SOLID)');
+            insert into rooms (name)
+            values ('Job4j Middle (Java EE, Hibernate, Spring, Микросервисы)');
+        </sql>
+    </changeSet>
+    <changeSet author="elias" id="init-persons-rooms">
+        <sql>
+            insert into persons_rooms (person_id, room_id)
+            values (1, 1);
+            insert into persons_rooms (person_id, room_id)
+            values (1, 2);
+            insert into persons_rooms (person_id, room_id)
+            values (1, 3);
+            insert into persons_rooms (person_id, room_id)
+            values (2, 1);
+            insert into persons_rooms (person_id, room_id)
+            values (2, 1);
+            insert into persons_rooms (person_id, room_id)
+            values (3, 2);
+            insert into persons_rooms (person_id, room_id)
+            values (3, 3);
+            insert into persons_rooms (person_id, room_id)
+            values (4, 1);
+            insert into persons_rooms (person_id, room_id)
+            values (4, 2);
+            insert into persons_rooms (person_id, room_id)
+            values (4, 3);
+            insert into persons_rooms (person_id, room_id)
+            values (5, 2);
+            insert into persons_rooms (person_id, room_id)
+            values (6, 3);
+            insert into persons_rooms (person_id, room_id)
+            values (7, 1);
+            insert into persons_rooms (person_id, room_id)
+            values (7, 2);
+            insert into persons_rooms (person_id, room_id)
+            values (8, 3);
+            insert into persons_rooms (person_id, room_id)
+            values (9, 3);
+            insert into persons_rooms (person_id, room_id)
+            values (10, 3);
+        </sql>
+    </changeSet>
+    <changeSet author="elias" id="init-messages">
+        <sql>
+            insert into messages (text, created, person_id, room_id)
+            values ('Привет! Какими способами вы создаёте объекты с приватным конструктором?',
+                    now(), 2, 1);
+            insert into messages (text, created, person_id, room_id)
+            values ('Привет! Помогите! Не понимаю, как работает FileWalkTree',
+                    now(), 5, 2);
+            insert into messages (text, created, person_id, room_id)
+            values ('Добрый день! На какой стадии при поднятии контейнера начинают работать бинПостПроцессоры?',
+                    now(), 8, 3);
+        </sql>
+    </changeSet>
+</databaseChangeLog>
