@@ -33,12 +33,16 @@ public class MessageServiceImpl implements MessageService {
                 personRepository.findById(messageDto.getPersonId())
                                 .orElseThrow(
                                         () -> new NullPointerException(
-                                                "Person with id " + messageDto.getPersonId() + " not found!"
+                                                "Person with id "
+                                                        + messageDto.getPersonId()
+                                                        + " not found!"
                                         )
                                 );
         var room = roomRepository.findById(messageDto.getRoomId())
                                  .orElseThrow(() -> new NullPointerException(
-                                         "Room with id " + messageDto.getRoomId() + " not found!"
+                                         "Room with id "
+                                                 + messageDto.getRoomId()
+                                                 + " not found!"
                                  ));
         message.setPerson(person);
         message.setRoom(room);
@@ -68,7 +72,9 @@ public class MessageServiceImpl implements MessageService {
                 messageRepository.findById(messageId)
                                  .orElseThrow(
                                          () -> new NullPointerException(
-                                                 "Message with id " + messageId + " not found!"
+                                                 "Message with id "
+                                                         + messageId
+                                                         + " not found!"
                                          )
                                  );
         messageRepository.delete(message);
@@ -83,7 +89,9 @@ public class MessageServiceImpl implements MessageService {
                         messageRepository.findById(messageId)
                                          .orElseThrow(
                                                  () -> new NullPointerException(
-                                                         "Message with id " + messageId + " not found!"
+                                                         "Message with id "
+                                                                 + messageId
+                                                                 + " not found!"
                                                  )
                                          )
                 )

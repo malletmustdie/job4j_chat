@@ -53,7 +53,9 @@ public class PersonServiceImpl implements PersonService {
                 personRepository.findById(personId)
                                 .orElseThrow(
                                         () -> new NullPointerException(
-                                                "Person with id " + personId + " not found!"
+                                                "Person with id "
+                                                        + personId
+                                                        + " not found!"
                                         )
                                 );
         personRepository.delete(person);
@@ -68,7 +70,9 @@ public class PersonServiceImpl implements PersonService {
                         personRepository.findById(personId)
                                         .orElseThrow(
                                                 () -> new NullPointerException(
-                                                        "Person with id " + personId + " not found!"
+                                                        "Person with id "
+                                                                + personId
+                                                                + " not found!"
                                                 )
                                         )
                 )
