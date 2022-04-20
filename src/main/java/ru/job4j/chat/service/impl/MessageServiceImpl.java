@@ -29,8 +29,17 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public ResponseEntity<Message> createMessage(MessageDto messageDto) {
         var message = messageMapper.toEntity(messageDto);
-        var person = personRepository.getById(messageDto.getPersonId());
-        var room = roomRepository.getById(messageDto.getRoomId());
+        var person =
+                personRepository.findById(messageDto.getPersonId())
+                                .orElseThrow(
+                                        () -> new NullPointerException(
+                                                "Person with id " + messageDto.getPersonId() + " not found!"
+                                        )
+                                );
+        var room = roomRepository.findById(messageDto.getRoomId())
+                                 .orElseThrow(() -> new NullPointerException(
+                                         "Room with id " + messageDto.getRoomId() + " not found!"
+                                 ));
         message.setPerson(person);
         message.setRoom(room);
         var result = messageRepository.save(message);
@@ -55,7 +64,14 @@ public class MessageServiceImpl implements MessageService {
     @Transactional
     @Override
     public ResponseEntity<Void> deleteMessage(Long messageId) {
-        messageRepository.deleteById(messageId);
+        var message =
+                messageRepository.findById(messageId)
+                                 .orElseThrow(
+                                         () -> new NullPointerException(
+                                                 "Message with id " + messageId + " not found!"
+                                         )
+                                 );
+        messageRepository.delete(message);
         return ResponseEntity.ok().build();
     }
 
@@ -64,7 +80,12 @@ public class MessageServiceImpl implements MessageService {
     public ResponseEntity<MessageInfo> findMessageById(Long messageId) {
         return ResponseEntity.ok(
                 messageMapper.toMessageInfo(
-                        messageRepository.getById(messageId)
+                        messageRepository.findById(messageId)
+                                         .orElseThrow(
+                                                 () -> new NullPointerException(
+                                                         "Message with id " + messageId + " not found!"
+                                                 )
+                                         )
                 )
         );
     }

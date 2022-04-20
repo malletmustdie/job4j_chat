@@ -49,8 +49,14 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     @Override
     public ResponseEntity<Void> deletePerson(Long personId) {
-        personRepository.findById(personId)
-                        .ifPresent(personRepository::delete);
+        var person =
+                personRepository.findById(personId)
+                                .orElseThrow(
+                                        () -> new NullPointerException(
+                                                "Person with id " + personId + " not found!"
+                                        )
+                                );
+        personRepository.delete(person);
         return ResponseEntity.ok().build();
     }
 
@@ -58,7 +64,14 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public ResponseEntity<PersonInfo> findPersonById(Long personId) {
         return ResponseEntity.ok(
-                personMapper.toPersonInfo(personRepository.getById(personId))
+                personMapper.toPersonInfo(
+                        personRepository.findById(personId)
+                                        .orElseThrow(
+                                                () -> new NullPointerException(
+                                                        "Person with id " + personId + " not found!"
+                                                )
+                                        )
+                )
         );
     }
 

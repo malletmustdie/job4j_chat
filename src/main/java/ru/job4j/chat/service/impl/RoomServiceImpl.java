@@ -36,7 +36,10 @@ public class RoomServiceImpl implements RoomService {
     @Transactional
     @Override
     public ResponseEntity<Void> deleteRoom(Long roomId) {
-        var room = roomRepository.getById(roomId);
+        var room = roomRepository.findById(roomId)
+                                 .orElseThrow(() -> new NullPointerException(
+                                         "Room with id " + roomId + " not found!"
+                                 ));
         personRepository.findAll()
                         .forEach(person -> person.getRooms()
                                                  .remove(room));
@@ -47,8 +50,18 @@ public class RoomServiceImpl implements RoomService {
     @Transactional
     @Override
     public ResponseEntity<Void> joinRoom(Long roomId, Long personId) {
-        var room = roomRepository.getById(roomId);
-        var person = personRepository.getById(personId);
+        var room =
+                roomRepository.findById(roomId)
+                              .orElseThrow(() -> new NullPointerException(
+                                      "Room with id " + roomId + " not found!"
+                              ));
+        var person =
+                personRepository.findById(personId)
+                                .orElseThrow(
+                                        () -> new NullPointerException(
+                                                "Person with id " + personId + " not found!"
+                                        )
+                                );
         person.addRoom(room);
         return ResponseEntity.ok().build();
     }
@@ -56,8 +69,18 @@ public class RoomServiceImpl implements RoomService {
     @Transactional
     @Override
     public ResponseEntity<Void> leaveRoom(Long roomId, Long personId) {
-        var room = roomRepository.getById(roomId);
-        var person = personRepository.getById(personId);
+        var room =
+                roomRepository.findById(roomId)
+                              .orElseThrow(() -> new NullPointerException(
+                                      "Room with id " + roomId + " not found!"
+                              ));
+        var person =
+                personRepository.findById(personId)
+                                .orElseThrow(
+                                        () -> new NullPointerException(
+                                                "Person with id " + personId + " not found!"
+                                        )
+                                );
         person.getRooms().remove(room);
         room.getPersons().remove(person);
         return ResponseEntity.ok().build();
@@ -68,7 +91,10 @@ public class RoomServiceImpl implements RoomService {
     public ResponseEntity<RoomInfo> findRoomById(Long roomId) {
         return ResponseEntity.ok(
                 roomMapper.toRoomInfo(
-                        roomRepository.getById(roomId)
+                        roomRepository.findById(roomId)
+                                      .orElseThrow(() -> new NullPointerException(
+                                              "Room with id " + roomId + " not found!"
+                                      ))
                 )
         );
     }

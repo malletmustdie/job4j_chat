@@ -11,4 +11,6 @@ public class ErrorResponseDto {
 
     private String msg;
 
+    private String type;
+
 }
