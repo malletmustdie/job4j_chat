@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -45,7 +46,7 @@ public class AuthController {
     private final ObjectMapper objectMapper;
 
     @ApiOperation("Авторизация на сервере")
-    @PostMapping(value = ApiPathConstants.LOGIN, produces = "application/json")
+    @PostMapping(value = ApiPathConstants.LOGIN)
     public ResponseEntity<AuthResponseDto> login(@RequestBody AuthRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
@@ -59,11 +60,12 @@ public class AuthController {
                 );
             }
             String token = jwtTokenProvider.createToken(username, person.getRoles());
-            AuthResponseDto response = AuthResponseDto.builder()
+            return ResponseEntity.status(HttpStatus.OK)
+                                 .contentType(MediaType.APPLICATION_JSON)
+                                 .body(AuthResponseDto.builder()
                                                       .username(username)
                                                       .token(token)
-                                                      .build();
-            return ResponseEntity.ok(response);
+                                                      .build());
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }
