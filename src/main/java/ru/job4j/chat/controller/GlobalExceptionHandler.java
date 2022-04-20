@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.job4j.chat.dto.ErrorResponseDto;
@@ -21,12 +22,29 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {NullPointerException.class})
     public void handleException(Exception e, HttpServletResponse response) throws IOException {
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setStatus(HttpStatus.NOT_FOUND.value());
         response.setContentType("application/json");
         response.getWriter().write(
                 objectMapper.writeValueAsString(
                         ErrorResponseDto.builder()
                                         .status(HttpStatus.NOT_FOUND.getReasonPhrase())
+                                        .msg(e.getMessage())
+                                        .type(e.getClass().toString())
+                                        .build()
+                )
+        );
+        log.error(e.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+    public void handleValidationException(Exception e, HttpServletResponse response)
+            throws IOException {
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setContentType("application/json");
+        response.getWriter().write(
+                objectMapper.writeValueAsString(
+                        ErrorResponseDto.builder()
+                                        .status(HttpStatus.BAD_REQUEST.getReasonPhrase())
                                         .msg(e.getMessage())
                                         .type(e.getClass().toString())
                                         .build()

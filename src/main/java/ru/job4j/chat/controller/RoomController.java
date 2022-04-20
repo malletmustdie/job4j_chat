@@ -1,11 +1,14 @@
 package ru.job4j.chat.controller;
 
+import javax.validation.Valid;
+
 import java.util.List;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +21,7 @@ import ru.job4j.chat.dto.RoomInfo;
 import ru.job4j.chat.model.Room;
 import ru.job4j.chat.service.RoomService;
 import ru.job4j.chat.util.ApiPathConstants;
+import ru.job4j.chat.util.Operation;
 
 @Api(tags = "Эндпоинты для управления комнатами")
 @RestController
@@ -28,8 +32,9 @@ public class RoomController {
     private final RoomService roomService;
 
     @ApiOperation("Создание комнаты")
+    @Validated(Operation.OnCreate.class)
     @PostMapping(value = ApiPathConstants.CREATE_ROOM, produces = "application/json")
-    public ResponseEntity<Room> create(@RequestBody RoomDto roomDto) {
+    public ResponseEntity<Room> create(@Valid @RequestBody RoomDto roomDto) {
         return roomService.savePerson(roomDto);
     }
 
