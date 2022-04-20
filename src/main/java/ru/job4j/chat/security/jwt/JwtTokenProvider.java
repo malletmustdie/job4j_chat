@@ -13,7 +13,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.job4j.chat.model.Role;
 
+@RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
 
@@ -33,8 +34,7 @@ public class JwtTokenProvider {
     @Value("${jwt.expired}")
     private long validityInMilliseconds;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -55,7 +55,7 @@ public class JwtTokenProvider {
                    .setClaims(claims)
                    .setIssuedAt(now)
                    .setExpiration(validity)
-                   .signWith(SignatureAlgorithm.HS256, secret)//
+                   .signWith(SignatureAlgorithm.HS256, secret)
                    .compact();
     }
 
