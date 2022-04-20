@@ -2,8 +2,7 @@ package ru.job4j.chat.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,9 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
@@ -42,8 +39,15 @@ public class Person {
 
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "persons_roles",
+               joinColumns = @JoinColumn(name = "person_id"),
+               inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
@@ -61,7 +65,12 @@ public class Person {
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "room_id")
     )
-    private Set<Room> rooms = new HashSet<>();
+    private List<Room> rooms = new ArrayList<>();
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+        role.getPersons().add(this);
+    }
 
     public void addMessage(Message message) {
         this.messages.add(message);

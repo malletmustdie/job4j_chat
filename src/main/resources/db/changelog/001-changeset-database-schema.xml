@@ -9,8 +9,16 @@
             (
                 id       BIGSERIAL PRIMARY KEY NOT NULL,
                 username VARCHAR(255),
-                password VARCHAR(255),
-                role     VARCHAR(255)
+                password VARCHAR(255)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="create-roles-table" author="elias">
+        <sql>
+            CREATE TABLE roles
+            (
+                id   BIGSERIAL PRIMARY KEY NOT NULL,
+                name VARCHAR(2000)
             );
         </sql>
     </changeSet>
@@ -34,6 +42,18 @@
                 room_id   BIGINT,
                 FOREIGN KEY (person_id) REFERENCES persons (id),
                 FOREIGN KEY (room_id) REFERENCES rooms (id)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="create-persons-roles-table" author="elias">
+        <sql>
+            CREATE TABLE persons_roles
+            (
+                id        BIGSERIAL PRIMARY KEY NOT NULL,
+                person_id BIGINT,
+                role_id   BIGINT,
+                FOREIGN KEY (person_id) REFERENCES persons (id),
+                FOREIGN KEY (role_id) REFERENCES roles (id)
             );
         </sql>
     </changeSet>

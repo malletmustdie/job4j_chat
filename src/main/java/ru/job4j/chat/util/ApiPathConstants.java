@@ -5,7 +5,24 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ApiPathConstants {
 
+    public static final String[] AUTH_WHITELIST = {
+            "/",
+            "/v2/api-docs",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/webjars/**"
+    };
+
     public static final String API_V_1 = "/api/v1";
+
+    public static final String AUTHENTICATION = "/authentication";
+
+    public static final String LOGIN = "/login";
+
+    public static final String SIGN_UP_URL = API_V_1 + AUTHENTICATION + LOGIN;
 
     public static final String PERSON = "/person";
 

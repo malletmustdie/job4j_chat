@@ -19,3 +19,6 @@ spring:
 springfox:
   documentation:
     swagger.v2.path: /v2/api-docs
+jwt:
+  secret: malletsecretword
+  expired: 3600000

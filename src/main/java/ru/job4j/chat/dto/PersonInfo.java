@@ -1,5 +1,7 @@
 package ru.job4j.chat.dto;
 
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -18,8 +20,8 @@ public class PersonInfo {
     @ApiModelProperty("имя пользователя")
     private String username;
 
-    @ApiModelProperty("Роль пользователя")
-    private Role role;
+    @ApiModelProperty("Роли пользователя")
+    private List<Role> roles;
 
     @ApiModelProperty("Общее количество сообщений от пользователя")
     private Integer totalMessages;

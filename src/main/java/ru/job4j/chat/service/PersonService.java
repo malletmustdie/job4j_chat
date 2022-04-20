@@ -19,4 +19,6 @@ public interface PersonService {
 
     ResponseEntity<List<PersonInfo>> findAllPersons();
 
+    Person findByUsername(String username);
+
 }

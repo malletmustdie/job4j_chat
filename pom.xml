@@ -22,6 +22,7 @@
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
         <swagger.version>1.5.21</swagger.version>
+        <jjwt.version>0.9.1</jjwt.version>
         <checkstyle.version>8.45</checkstyle.version>
         <checkstyle.mavenplugin.version>3.1.2</checkstyle.mavenplugin.version>
     </properties>
@@ -34,6 +35,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -68,6 +73,11 @@
             <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
             <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
         </dependency>
 
         <dependency>

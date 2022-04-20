@@ -5,28 +5,22 @@
 
     <changeSet author="elias" id="init-persons">
         <sql>
-            insert into persons (username, password, role)
-            values ('Admin', 'root', 'ADMIN');
-            insert into persons (username, password, role)
-            values ('Student-1', 'qwerty', 'USER');
-            insert into persons (username, password, role)
-            values ('Student-2', 'qwerty', 'USER');
-            insert into persons (username, password, role)
-            values ('Student-3', 'qwerty', 'USER');
-            insert into persons (username, password, role)
-            values ('Student-4', 'qwerty', 'USER');
-            insert into persons (username, password, role)
-            values ('Student-5', 'qwerty', 'USER');
-            insert into persons (username, password, role)
-            values ('Student-6', 'qwerty', 'USER');
-            insert into persons (username, password, role)
-            values ('Student-7', 'qwerty', 'USER');
-            insert into persons (username, password, role)
-            values ('Student-8', 'qwerty', 'USER');
-            insert into persons (username, password, role)
-            values ('Student-9', 'qwerty', 'USER');
-            insert into persons (username, password, role)
-            values ('Student-10', 'qwerty', 'USER');
+            insert into persons (username, password)
+            values ('root', '$2a$04$vSDdJESJxt7KQAXDDq3xLu.yJ.U9zcn/cVa2s0K7TH/o/yBUdVYym');
+            insert into persons (username, password)
+            values ('student-1', '$2a$04$srJpKMFB0hPX9QjWoXVLHecTvUM8K3xkgrJqvPrkWyipzkdiGRPCK');
+            insert into persons (username, password)
+            values ('student-2', '$2a$04$4rGS/mwzhP3LCkiJ5kVGH.KW9uXqXmB6k/ALFU337cumJKgYLTlfy');
+            insert into persons (username, password)
+            values ('student-3', '$2a$04$U5Z6WeXGKyaDudAOAwNMaOj3NXRjN4QyL.V/8vg19aQhI1/S0XA6W');
+        </sql>
+    </changeSet>
+    <changeSet author="elias" id="init-roles">
+        <sql>
+            insert into roles (name)
+            values ('ROLE_USER');
+            insert into roles (name)
+            values ('ROLE_ADMIN');
         </sql>
     </changeSet>
     <changeSet author="elias" id="init-rooms">
@@ -37,6 +31,20 @@
             values ('Job4j Джуниор (Data Structures, IO, GC, SQL, TDD, SOLID)');
             insert into rooms (name)
             values ('Job4j Middle (Java EE, Hibernate, Spring, Микросервисы)');
+        </sql>
+    </changeSet>
+    <changeSet author="elias" id="init-persons-roles">
+        <sql>
+            insert into persons_roles (person_id, role_id)
+            values (1, 1);
+            insert into persons_roles (person_id, role_id)
+            values (1, 2);
+            insert into persons_roles (person_id, role_id)
+            values (2, 1);
+            insert into persons_roles (person_id, role_id)
+            values (3, 1);
+            insert into persons_roles (person_id, role_id)
+            values (4, 1);
         </sql>
     </changeSet>
     <changeSet author="elias" id="init-persons-rooms">
@@ -50,31 +58,13 @@
             insert into persons_rooms (person_id, room_id)
             values (2, 1);
             insert into persons_rooms (person_id, room_id)
-            values (2, 1);
+            values (2, 3);
             insert into persons_rooms (person_id, room_id)
             values (3, 2);
             insert into persons_rooms (person_id, room_id)
             values (3, 3);
             insert into persons_rooms (person_id, room_id)
-            values (4, 1);
-            insert into persons_rooms (person_id, room_id)
-            values (4, 2);
-            insert into persons_rooms (person_id, room_id)
             values (4, 3);
-            insert into persons_rooms (person_id, room_id)
-            values (5, 2);
-            insert into persons_rooms (person_id, room_id)
-            values (6, 3);
-            insert into persons_rooms (person_id, room_id)
-            values (7, 1);
-            insert into persons_rooms (person_id, room_id)
-            values (7, 2);
-            insert into persons_rooms (person_id, room_id)
-            values (8, 3);
-            insert into persons_rooms (person_id, room_id)
-            values (9, 3);
-            insert into persons_rooms (person_id, room_id)
-            values (10, 3);
         </sql>
     </changeSet>
     <changeSet author="elias" id="init-messages">
@@ -84,10 +74,10 @@
                     now(), 2, 1);
             insert into messages (text, created, person_id, room_id)
             values ('Привет! Помогите! Не понимаю, как работает FileWalkTree',
-                    now(), 5, 2);
+                    now(), 3, 2);
             insert into messages (text, created, person_id, room_id)
             values ('Добрый день! На какой стадии при поднятии контейнера начинают работать бинПостПроцессоры?',
-                    now(), 8, 3);
+                    now(), 4, 3);
         </sql>
     </changeSet>
 </databaseChangeLog>

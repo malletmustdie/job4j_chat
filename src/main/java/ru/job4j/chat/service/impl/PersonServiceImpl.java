@@ -38,7 +38,7 @@ public class PersonServiceImpl implements PersonService {
                         .ifPresent(personFromDb -> {
                             personFromDb.setUsername(person.getUsername());
                             personFromDb.setPassword(person.getPassword());
-                            personFromDb.setRole(person.getRole());
+                            person.getRoles().forEach(personFromDb::addRole);
                             person.getRooms().forEach(personFromDb::addRoom);
                             person.getMessages().forEach(personFromDb::addMessage);
                             personRepository.save(personFromDb);
@@ -71,6 +71,11 @@ public class PersonServiceImpl implements PersonService {
                                 .map(personMapper::toPersonInfo)
                                 .collect(Collectors.toList())
         );
+    }
+
+    @Override
+    public Person findByUsername(String username) {
+        return personRepository.findByUsername(username);
     }
 
 }

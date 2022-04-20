@@ -13,18 +13,18 @@ public interface PersonMapper {
     @Mapping(source = "dto.id", target = "id")
     @Mapping(source = "dto.username", target = "username")
     @Mapping(source = "dto.password", target = "password")
-    @Mapping(source = "dto.role", target = "role")
+    @Mapping(source = "dto.roles", target = "roles")
     Person map(PersonDto dto);
 
     @Mapping(source = "entity.username", target = "username")
     @Mapping(source = "entity.password", target = "password")
-    @Mapping(source = "entity.role", target = "role")
+    @Mapping(source = "entity.roles", target = "roles")
     PersonDto map(Person entity);
 
     default PersonInfo toPersonInfo(Person entity) {
         return PersonInfo.builder()
                          .username(entity.getUsername())
-                         .role(entity.getRole())
+                         .roles(entity.getRoles())
                          .totalMessages(entity.getMessages().size())
                          .totalRooms(entity.getRooms().size())
                          .build();
